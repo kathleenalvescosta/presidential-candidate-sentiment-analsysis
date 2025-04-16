@@ -1,0 +1,1 @@
+This is a sentiment analysis tutorial using NLTK's sentiment analysis module. The dataset that will be used here is two transcripts of the statements made in interviews by Joe Biden and Donald Trump in 2020 during their campaign. This tutorial will explain how to organize the data to be used for sentiment analysis.
