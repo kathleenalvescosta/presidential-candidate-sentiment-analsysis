@@ -10,15 +10,16 @@
             <p> Natural Language Toolkit, or NLTK, is a Python library configured to analyze natural speech data. NLTK offers a wide range of features that can easily process any body of text, such as part-of-speech tagging, tokenization, and semantic reasoning. 
                 One of NLTK's most popular features is its sentiment analysis tool, VADER. VADER, also known as <b>Valence Aware Dictionary for sEntiment Reasoning</b>, uses its sentiment lexicon and a blend of grammatical rules and syntactical conventions.</p>
 
-            <h1>How does VADER work?</1h>
-            <h2>Sentiment Lexicon</h2>
+            <h2>How does VADER work?</h2>
+            <h3>Sentiment Lexicon</h3>
                 <p>A sentiment lexicon is a dictionary that maps words, phrases, and symbols and matches those to a specific emotional valence. VADER's literature further explains this process:</p>
-                <blockquote> We  begin  by  constructing  a  list  inspired  by  examiningexisting well-established  sentiment  word-banks  (LIWC, ANEW, and  GI).  To  this,  we  next  incorporate  numerous lexical  features  common  to  sentiment  expression  
+                <blockquote> "We  begin  by  constructing  a  list  inspired  by  examiningexisting well-established  sentiment  word-banks  (LIWC, ANEW, and  GI).  To  this,  we  next  incorporate  numerous lexical  features  common  to  sentiment  expression  
                     in  mi-croblogs, including a full list of Western-style  emoticons (for example, “:-)” denotes a “smiley face” and generally indicates  positive  sentiment),  sentiment-related  acronyms and  initialisms (e.g.,  LOL  and  WTF  are  both  
                     sentiment-laden  initialisms),  and  commonly  used  slang12  with  senti-ment value (e.g., “nah”, “meh   ”and “giggly”). This processprovided us with over 9,000 lexical feature candidates. Next,  we  assessed  the  general  applicability  
-                    of  each  fea-ture  candidate  to  sentiment  expressions.  We  used  a  wis-dom-of-the-crowd13  (WotC)  approach  (Surowiecki,  2004) to  acquire  a  valid  point  estimate  for  the  sentiment  valence (intensity)  of  each  context-free  
-                    candidate  feature.  We  col-lected  intensity  ratings  on  each  of  our  candidate  lexical features  from  ten  independent  human  raters  (for  a  total  of 90,000+ ratings). Features were rated on a scale from “[–4] Extremely Negative” 
-                    to “[4] Extremely Positive”, withallowance for “[0] Neutral (or Neither, N/A)” (Hutto & Gilbert, 2014) </blockquote>
+                    of  each  feature  candidate  to  sentiment  expressions.  We  used  a  wisdom-of-the-crowd  (WotC)  approach  (Surowiecki,  2004) to  acquire  a  valid  point  estimate  for  the  sentiment  valence (intensity)  of  each  context-free  
+                    candidate  feature.  We  collected  intensity  ratings  on  each  of  our  candidate  lexical features  from  ten  independent  human  raters  (for  a  total  of 90,000+ ratings). Features were rated on a scale from '[–4] Extremely Negative' 
+                    to '[4] Extremely Positive', with allowance for '[0] Neutral (or Neither, N/A)'" (Hutto & Gilbert, 2014). </blockquote>
+                <p></p>
         <nav>
             <ul>
                 <li><a href="#first-section">First Section</a></li>
@@ -32,8 +33,18 @@
         
         <main>
             <section id="first-section">
-                <h2>First Section</h2>
-                <p>paragraph on first topic</p>
+                <h2>Step 0</h2>
+                <p>For step zero, you will need to start by installing and importing the necessary modules. For this particular analysis, we'll be using:</p>
+                <pre><code>
+                    import nltk
+                    from nltk.sentiment.vader import SentimentIntensityAnalyzer
+                    from nltk.corpus import stopwords
+                    from nltk.tokenize import word_tokenize
+                    from nltk.stem import WordNetLemmatizer
+                    import re
+                    import pandas as pd
+                    import string
+                </pre></code>
             </section>
 
             <section id="second-section">
