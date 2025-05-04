@@ -22,8 +22,8 @@
                 <p></p>
         <nav>
             <ul>
-                <li><a href="#first-section">First Section</a></li>
-                <li><a href="#second-section">Second Section</a></li>
+                <li><a href="#step0">Step 0: Installing and Importing Modules</a></li>
+                <li><a href="#step1">Step 1: Loading in and Cleaning Up Your CSV</a></li>
                 <li><a href="#third-section">Third Section</a></li>
             </ul>
         </nav>
@@ -32,24 +32,26 @@
 
         
         <main>
-            <section id="first-section">
-                <h2>Step 0</h2>
-                <p>For step zero, you will need to start by installing and importing the necessary modules. For this particular analysis, we'll be using:</p>
+            <section id="step0">
+                <h2>Step 0: Installing and Importing Modules</h2>
+                <p>For step zero, you will need to start by installing and importing the necessary modules. For this particular analysis, you will need to download the following modules onto your terminal.</p>
                 <pre><code>
-                    import nltk
-                    from nltk.sentiment.vader import SentimentIntensityAnalyzer
-                    from nltk.corpus import stopwords
-                    from nltk.tokenize import word_tokenize
-                    from nltk.stem import WordNetLemmatizer
-                    import re
-                    import pandas as pd
-                    import string
+                    pip install pandas
+                    pip install nltk
+                    # this code will download all of the necessary 
+                    python3 -c "import nltk; [nltk.download(x) for x in ['vader_lexicon', 'stopwords', 'punkt', 'wordnet', 'omw-1.4']]"
                 </pre></code>
+                <p> Once you download those, you will need to also download our dataset from GitHub. You can do this directly in your terminal like this:</p>
+                <pre><code> 
+                wget https://github.com/favstats/demdebates2020/blob/master/data/debates.csv
+                </code></pre>
+                <p> Once everything is downloaded correctly, you are ready to head to step 1.</p>
+                
             </section>
 
-            <section id="second-section">
-                <h2>Second Section</h2>
-                <p>paragraph on Second topic</p>
+            <section id="step1">
+                <h2>Step 1: Loading in and Cleaning Up Your CSV</h2>
+                <p>Once you have imported all your modules and </p>
             </section>
 
             <section id="third-section">
