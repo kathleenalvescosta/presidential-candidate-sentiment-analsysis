@@ -87,16 +87,31 @@
                 'Protester']))] \
                 .drop(columns=['background', 'gender', 'debate', 'day', 'type', 'order']
                 )
-                csvcleaned.to_csv('debate.csv', index=False)
+                csvcleaned.to_csv('data.csv', index=False)
                 </pre></code>
+                
                 <p>This serves to tell the program to remove columns we don't want ('background', 'gender', 'debate', 'day', 'type', 'order'), as well as not adding any data where the row has "NA" in the speech column or 'Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
-                'Protester.' Once that is all compiled, everything in the variable 'csvcleaned' will be added in a new CSV file called 'debate.csv'.</p>
+                'Protester.' Once that is all compiled, everything in the variable 'csvcleaned' will be added in a new CSV file called 'data.csv'. Make sure to check that your data.csv file is correctly displaying the data you want. This CSV file  Once you've extracted and put in the data you are looking to analyze, you can move on to the lemmatization.</p>
                 
             </section>
 
             <section id="step2">
-                <h2>Third Section</h2>
-                <p>paragraph on Third topic</p>
+                <h2>Step 2: Create a Speaker Dictionary</h2>
+                <p>Once you have your 'speaker' and 'speech' data into your data.csv file, you will want to create a dictionary for each candidate, complete with all the speech they uttered over all the debates. To do this, we'll use the following code:</p>
+                <pre><code><mark>
+                    speakerdictionary = {}
+                    for _, row in csvcleaned.iterrows():
+                    speaker = row['speaker']
+                    speech = row['speech']
+
+                    if speaker not in speakerdictionary:
+                        speakerdictionary[speaker] = []
+                    speakerdictionary[speaker].append(speech)
+                </mark></code></pre>
+                
+                <p>Again, let's look at this step by step.</p>
+                <
+                
             </section>
         </main>
         <p>Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.</p>
