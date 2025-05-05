@@ -22,9 +22,10 @@
                 <p></p>
         <nav>
             <ul>
+                <h2>Sections</h2>
                 <li><a href="#step0">Step 0: Installing and Importing Modules</a></li>
                 <li><a href="#step1">Step 1: Loading in and Cleaning Up Your CSV</a></li>
-                <li><a href="#third-section">Third Section</a></li>
+                <li><a href="#step2">Step 2: Create a Speaker Dictionary</a></li>
             </ul>
         </nav>
 
@@ -43,9 +44,9 @@
                 </pre></code>
                 <p> Once you download those, you will need to also download our dataset from GitHub. Make sure you are downloading the <b>raw</b> dataset. You can do this directly in your terminal like this:</p>
                 <pre><code> 
-                wget https://raw.githubusercontent.com/favstats/demdebates2020/refs/heads/master/README.md
+                wget https://raw.githubusercontent.com/favstats/demdebates2020/refs/heads/master/data/debates.csv
                 </code></pre>
-                <p> Use <pre><code>python3</code></pre> to import your modules like so:<p>
+                <p> Use <code>python3</code> to import your modules like so:<p>
                     <pre><code>
                         import nltk
                         from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -76,9 +77,18 @@
                 </code></pre>
 
                 <p>Let's break down each piece of the code:</p>
-                <pre><code><mark>
-                    df = pd.read_csv('debates.csv')
-                </mark></code></pre>
+                <pre><code><mark>df = pd.read_csv('debates.csv')</mark></code></pre>
+                <p><code>df</code></p> here stands for DataFrame, a type of document structure. These are commonly used with datasets that have rows and columns (e.g. spreadsheet, CSV, SQL table). We are essentially loading <code>debates.csv</code> in to the DataFrame.
+
+                <pre><code><mark>csvcleaned = df[</mark></code></pre>
+                <pre><code><mark>(df['speech'] != 'NA') &
+                <pre><code><mark>(df['type'] != 'Moderator') &
+                <pre><code><mark>(~df['speaker'].isin(['Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
+                <pre><code><mark>'Protester']))] \</mark></code></pre>
+                <pre><code><mark>.drop(columns=['background', 'gender', 'debate', 'day', 'type', 'order']</mark></code></pre>
+                <pre><code><mark>)</mark></code></pre>
+                <pre><code><mark>csvcleaned.to_csv('debate.csv', index=False)</mark></code></pre>
+                
                 
             </section>
 
