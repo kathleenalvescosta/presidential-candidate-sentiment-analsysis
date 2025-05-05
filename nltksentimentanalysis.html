@@ -77,22 +77,24 @@
                 </code></pre>
 
                 <p>Let's break down each piece of the code:</p>
-                <pre><code><mark>df = pd.read_csv('debates.csv')</mark></code></pre>
-                <p><code>df</code></p> here stands for DataFrame, a type of document structure. These are commonly used with datasets that have rows and columns (e.g. spreadsheet, CSV, SQL table). We are essentially loading <code>debates.csv</code> in to the DataFrame.
+                <pre><code>df = pd.read_csv('debates.csv')</code></pre>
+                <p>The variable "df" here stands for DataFrame, a type of document structure. These are commonly used with datasets that have rows and columns (e.g. spreadsheet, CSV, SQL table). We are essentially loading debates.csv in to the DataFrame.
 
-                <pre><code><mark>csvcleaned = df[</mark></code></pre>
-                <pre><code><mark>(df['speech'] != 'NA') &
-                <pre><code><mark>(df['type'] != 'Moderator') &
-                <pre><code><mark>(~df['speaker'].isin(['Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
-                <pre><code><mark>'Protester']))] \</mark></code></pre>
-                <pre><code><mark>.drop(columns=['background', 'gender', 'debate', 'day', 'type', 'order']</mark></code></pre>
-                <pre><code><mark>)</mark></code></pre>
-                <pre><code><mark>csvcleaned.to_csv('debate.csv', index=False)</mark></code></pre>
-                
+                <pre><code>csvcleaned = df[
+                (df['speech'] != 'NA') &
+                (df['type'] != 'Moderator') &
+                (~df['speaker'].isin(['Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
+                'Protester']))] \
+                .drop(columns=['background', 'gender', 'debate', 'day', 'type', 'order']
+                )
+                csvcleaned.to_csv('debate.csv', index=False)
+                </pre></code>
+                <p>This serves to tell the program to remove columns we don't want ('background', 'gender', 'debate', 'day', 'type', 'order'), as well as not adding any data where the row has "NA" in the speech column or 'Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
+                'Protester.' Once that is all compiled, everything in the variable 'csvcleaned' will be added in a new CSV file called 'debate.csv'.</p>
                 
             </section>
 
-            <section id="third-section">
+            <section id="step2">
                 <h2>Third Section</h2>
                 <p>paragraph on Third topic</p>
             </section>
