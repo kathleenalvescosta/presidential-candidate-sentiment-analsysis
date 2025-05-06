@@ -26,6 +26,7 @@
                 <li><a href="#step0">Step 0: Installing and Importing Modules</a></li>
                 <li><a href="#step1">Step 1: Loading in and Cleaning Up Your CSV</a></li>
                 <li><a href="#step2">Step 2: Create a Speaker Dictionary</a></li>
+                <li><a href="#step3">Step 3: Tokenizing and Lemmatizing</a></li>
             </ul>
         </nav>
 
@@ -90,8 +91,11 @@
                 csvcleaned.to_csv('data.csv', index=False)
                 </pre></code>
                 
-                <p>This serves to tell the program to remove columns we don't want ('background', 'gender', 'debate', 'day', 'type', 'order'), as well as not adding any data where the row has "NA" in the speech column or 'Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
-                'Protester.' Once that is all compiled, everything in the variable 'csvcleaned' will be added in a new CSV file called 'data.csv'. Make sure to check that your data.csv file is correctly displaying the data you want. This CSV file  Once you've extracted and put in the data you are looking to analyze, you can move on to the lemmatization.</p>
+                <p>This serves to tell the program to remove columns we don't want ('background', 'gender', 'debate', 'day', 'type', 'order'), as well as not adding any data where the row has "NA" in the speech column or 'Speaker 1:', 'Speaker 2:', 
+                'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
+                'Protester.' Once that is all compiled, everything in the variable 'csvcleaned' will be added in a new CSV file called 'data.csv'. Make sure to check that your data.csv file is correctly displaying the data you want. This CSV file 
+                isn't actually going to be used in the code from here, but it is a great way to visualize and ensure all the data you're extracting is what you need. If you see any rows or columns that shouldn't be there, you know to go back. Once 
+                you've extracted and put in the data you are looking to analyze, you can move on to the lemmatization.</p>
                 
             </section>
 
@@ -99,20 +103,140 @@
                 <h2>Step 2: Create a Speaker Dictionary</h2>
                 <p>Once you have your 'speaker' and 'speech' data into your data.csv file, you will want to create a dictionary for each candidate, complete with all the speech they uttered over all the debates. To do this, we'll use the following code:</p>
                 <pre><code><mark>
-                    speakerdictionary = {}
-                    for _, row in csvcleaned.iterrows():
+                speakerdictionary = {}
+                for _, row in csvcleaned.iterrows():
                     speaker = row['speaker']
                     speech = row['speech']
 
-                    if speaker not in speakerdictionary:
-                        speakerdictionary[speaker] = []
-                    speakerdictionary[speaker].append(speech)
+                if speaker not in speakerdictionary:
+                    speakerdictionary[speaker] = []
+                speakerdictionary[speaker].append(speech)
                 </mark></code></pre>
                 
                 <p>Again, let's look at this step by step.</p>
-                <
-                
+                <pre><code>
+                speakerdictionary = {}
+                for _, row in csvcleaned.iterrows():
+                    speaker = row['speaker']
+                    speech = row['speech']
+                </code></pre>
+                <p>What this will do is initialize an empty dictionary called "speakerdictionary." Python will loop through each of the rows, using the .iterrows() function. .Iterrows() is a method that treats each row in the DataFrame as an (index, row) pair. 
+                The underscore in the first line means that index is not being used and row is all that matters. We also established the variables "speaker" and "speech" to represent their respective columns.</p>
+                <pre><code>
+                if speaker not in speakerdictionary:
+                    speakerdictionary[speaker] = []
+                speakerdictionary[speaker].append(speech)
+                </code></pre>
+                <p>Here we are checking to see if the speaker already has a speech entry; if it doesn't, we'll create a new empty list to input their speech. Then, whatever speech the loop is currently on gets added to the list.</p>
             </section>
+             <section id="step3">
+                <h2>Step 3: Tokenizing and Lemmatizing</h2>
+                 <p>Now that we've created our dictionary, we're still not done cleaning up our text. We'll use the following chunk of code to clean all the data up:</p>
+                 <pre><code>
+                     def preprocessing():
+                         lemmatizer = WordNetLemmatizer()
+                         lemmatizeddictionary = {}
+                         punctuation = ['...', '--', '``', "''"]
+                         for speaker, speeches in speakerdictionary.items():
+                            lemmatizeddictionary[speaker] = []
+                            for sentence in speeches:
+                                tokens = word_tokenize(str(sentence).lower())
+                                tokens = [word for word in tokens if
+                                word not in string.punctuation and word not in punctuation and word != 'nan']
+                                tokens = [word for word in tokens if not re.fullmatch(r"\s*", word)]
+                                filteredtokens = [token for token in tokens if token not in stop_words]
+
+                                lemmatized = [lemmatizer.lemmatize(word) for word in filteredtokens if word]
+                                if lemmatized:
+                                    lemmatizeddictionary[speaker].append(lemmatized)
+                        return lemmatizeddictionary
+                 </code></pre>
+                 <p>Again, lets look at it in chunks:</p>
+                 <pre><code>
+                     def preprocessing():
+                         lemmatizer = WordNetLemmatizer()
+                         lemmatizeddictionary = {}
+                         punctuation = ['...', '--', '``', "''"]
+                         stop_words = set(stopwords.words('english'))
+                 </code></pre>
+                 <p>This is a little obvious, but we are initializing a few variables here. The first is the WordNetLemmatizer, an NLTK module. Then, we initialize a lemmatized dictionary; this is where we will store our data for it to be 
+                    processed through the sentiment analyzer. And lastly, we are defining some punctuation. The reason we are defining these is because after being placed into the speakerdictionary, there are still some punctuation and other 
+                    variables that could cause problems when getting the sentiment scores. We want to look at speech and necessary punctuation only. Thats why it's important to double check by printing your dictionary (though this process may
+                    take a minute. Lastly, we are defining our stop words.</p>
+                 <pre><code>
+                         for speaker, speeches in speakerdictionary.items():
+                            lemmatizeddictionary[speaker] = []
+                 </code></pre>
+                 <p> Here we're initializing an empty list for each speaker before you start filling it with cleaned, tokenized, and lemmatized data.</p>
+                 <pre><code>
+                             for sentence in speeches:
+                                tokens = word_tokenize(str(sentence).lower())
+                                tokens = [word for word in tokens if word not in string.punctuation and word not in punctuation and word != 'nan']
+                                tokens = [word for word in tokens if not re.fullmatch(r"\s*", word)]
+                                filteredtokens = [token for token in tokens if token not in stop_words]
+
+                                lemmatized = [lemmatizer.lemmatize(word) for word in filteredtokens if word]
+                                if lemmatized:
+                                    lemmatizeddictionary[speaker].append(lemmatized)
+
+                        return lemmatizeddictionary
+                 </code></pre>
+                 <p>For each of the speeches, we're going in and lowering the text, removing any stop words, the punctuation we defined earlier, and ensuring there are no strings that aren't speech (such as that "nan" above). The remaining words that
+                 don't fall into those categories automatically get added to the lemmatized dictionary.</p>
+             </section>
+            
+             <section id="step4">
+                 <h2>Step 4: Analyzing Your Data</h2>
+                 <p>Our lemmatized dictionary is up and running, which means we can now run it through the analyzer.</p>
+                 <pre><code>
+                     def sentiment(speakerdictionary):
+                        analyzer = SentimentIntensityAnalyzer()
+                        for speaker, speeches in speakerdictionary.items():
+                            text = " ".join([" ".join(sentence) for sentence in speeches])
+                            if not text:
+                                continue
+
+                            scores = analyzer.polarity_scores(text)
+                            print(f"{speaker}: {scores}")
+                 </code></pre>
+                 <p>First, we define the sentiment analyzer as the variable "analyzer." Then we'll loop through each speaker and their speeches and rebuilding the sentences. If the list has no text (which it shouldn't) it gets skipped. The scores are then 
+                 calculated and printed in a speaker: scores format.</p>
+             </section>
+            <section id="step5">
+                <p>Now, finally, we can run the analyzer and get our results. To do this, simply run the following code chunk:</p>
+                <pre><code>
+                    data = preprocessing()
+                    sentiment(data)
+                </code></pre>
+                <p>This should print the following:</p>
+                <pre><code>
+                    Elizabeth Warren: {'neg': 0.121, 'neu': 0.686, 'pos': 0.193, 'compound': 1.0}
+                    Amy Klobuchar: {'neg': 0.087, 'neu': 0.717, 'pos': 0.196, 'compound': 1.0}
+                    Beto O'Rourke: {'neg': 0.126, 'neu': 0.663, 'pos': 0.211, 'compound': 0.9998}
+                    Cory Booker: {'neg': 0.153, 'neu': 0.631, 'pos': 0.216, 'compound': 0.9999}
+                    Julian Castro: {'neg': 0.083, 'neu': 0.709, 'pos': 0.207, 'compound': 0.9999}
+                    Tulsi Gabbard: {'neg': 0.17, 'neu': 0.621, 'pos': 0.209, 'compound': 0.9974}
+                    Bill de Blasio: {'neg': 0.123, 'neu': 0.672, 'pos': 0.205, 'compound': 0.999}
+                    John Delaney: {'neg': 0.064, 'neu': 0.7, 'pos': 0.236, 'compound': 0.9998}
+                    Jay Inslee: {'neg': 0.098, 'neu': 0.639, 'pos': 0.263, 'compound': 0.9997}
+                    Tim Ryan: {'neg': 0.091, 'neu': 0.711, 'pos': 0.198, 'compound': 0.9995}
+                    Bernie Sanders: {'neg': 0.131, 'neu': 0.677, 'pos': 0.192, 'compound': 1.0}
+                    Michael Bennet: {'neg': 0.104, 'neu': 0.701, 'pos': 0.196, 'compound': 0.9993}
+                    Joe Biden: {'neg': 0.088, 'neu': 0.774, 'pos': 0.139, 'compound': 1.0}
+                    Kamala Harris: {'neg': 0.115, 'neu': 0.681, 'pos': 0.204, 'compound': 0.9999}
+                    John Hickenlooper: {'neg': 0.116, 'neu': 0.723, 'pos': 0.161, 'compound': 0.9931}
+                    Kirsten Gillibrand: {'neg': 0.133, 'neu': 0.692, 'pos': 0.175, 'compound': 0.995}
+                    Pete Buttigieg: {'neg': 0.122, 'neu': 0.697, 'pos': 0.181, 'compound': 1.0}
+                    Andrew Yang: {'neg': 0.102, 'neu': 0.692, 'pos': 0.206, 'compound': 1.0}
+                    Eric Swalwell: {'neg': 0.197, 'neu': 0.687, 'pos': 0.116, 'compound': -0.993}
+                    Marianne Williamson: {'neg': 0.143, 'neu': 0.672, 'pos': 0.185, 'compound': 0.9914}
+                    Steve Bullock: {'neg': 0.069, 'neu': 0.734, 'pos': 0.197, 'compound': 0.9992}
+                    Tom Steyer: {'neg': 0.126, 'neu': 0.718, 'pos': 0.156, 'compound': 0.999}
+                    Mike Bloomberg: {'neg': 0.137, 'neu': 0.713, 'pos': 0.15, 'compound': 0.9628}
+                </code></pre>
+                <p>We finally have our analysis. To understand what we're looking at, we first need to understand what the numbers mean. Positive, negative, and neutral scores are calculated on a 0 to 1 scale, with 0 being negative and 1 being positive. "Compound" is an overall score of the sentiment of the person's speech, on a -1 to 1 scale, with -1 being very negative, 0 neutral, and 1 very positive.
+                Why, perhaps, is Eric Swalwell's sentiment score so low overall? With this sentiment analysis, we can take a deeper dive into each candidate and what they said. </p>
+                 
         </main>
         <p>Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.</p>
         <footer>
