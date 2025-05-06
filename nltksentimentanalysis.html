@@ -84,7 +84,8 @@
                 <pre><code>df = pd.read_csv('debates.csv')</code></pre>
                 <p>The variable "df" here stands for DataFrame, a type of document structure. These are commonly used with datasets that have rows and columns (e.g. spreadsheet, CSV, SQL table). We are essentially loading debates.csv in to the DataFrame.
 
-                <pre><code>csvcleaned = df[
+                <pre><code>
+                csvcleaned = df[
                 (df['speech'] != 'NA') &
                 (df['type'] != 'Moderator') &
                 (~df['speaker'].isin(['Speaker 1:', 'Speaker 2:', 'speaker 6:', 'speaker 7:', 'speaker 8:', 'Unknown',
@@ -105,7 +106,7 @@
             <section id="step2">
                 <h2>Step 2: Create a Speaker Dictionary</h2>
                 <p>Once you have your 'speaker' and 'speech' data into your data.csv file, you will want to create a dictionary for each candidate, complete with all the speech they uttered over all the debates. To do this, we'll use the following code:</p>
-                <pre><code><mark>
+                <pre><code>
                 speakerdictionary = {}
                 for _, row in csvcleaned.iterrows():
                     speaker = row['speaker']
@@ -114,7 +115,7 @@
                 if speaker not in speakerdictionary:
                     speakerdictionary[speaker] = []
                 speakerdictionary[speaker].append(speech)
-                </mark></code></pre>
+                </code></pre>
                 
                 <p>Again, let's look at this step by step.</p>
                 <pre><code>
