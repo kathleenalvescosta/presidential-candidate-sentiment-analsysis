@@ -19,7 +19,8 @@
                     of  each  feature  candidate  to  sentiment  expressions.  We  used  a  wisdom-of-the-crowd  (WotC)  approach  (Surowiecki,  2004) to  acquire  a  valid  point  estimate  for  the  sentiment  valence (intensity)  of  each  context-free  
                     candidate  feature.  We  collected  intensity  ratings  on  each  of  our  candidate  lexical features  from  ten  independent  human  raters  (for  a  total  of 90,000+ ratings). Features were rated on a scale from '[–4] Extremely Negative' 
                     to '[4] Extremely Positive', with allowance for '[0] Neutral (or Neither, N/A)'" (Hutto & Gilbert, 2014). </blockquote>
-                <p></p>
+                <p>The image below demonstrates the methods used to create VADER. With this, you can gain a deeper understanding of how VADER came about and what kinds of data may work best for an analysis with this tool:</p>
+                <img src= method.png alt= "VADER Method Diagram">
         <nav>
             <ul>
                 <h2>Sections</h2>
@@ -27,6 +28,8 @@
                 <li><a href="#step1">Step 1: Loading in and Cleaning Up Your CSV</a></li>
                 <li><a href="#step2">Step 2: Create a Speaker Dictionary</a></li>
                 <li><a href="#step3">Step 3: Tokenizing and Lemmatizing</a></li>
+                <li><a href="#step4">Step 4: Analyzing Your Data</a></li>
+                <li><a href="#step5">Step 5: Results</a></li>
             </ul>
         </nav>
 
@@ -203,6 +206,7 @@
                  calculated and printed in a speaker: scores format.</p>
              </section>
             <section id="step5">
+                <h2>Step 5: Results</h2>
                 <p>Now, finally, we can run the analyzer and get our results. To do this, simply run the following code chunk:</p>
                 <pre><code>
                     data = preprocessing()
