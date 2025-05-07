@@ -1,17 +1,121 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>NLTK Sentiment Analysis Tutorial</title>
-    </head>
-    
-    <body>
-        <header>
-            <h1>Introduction</h1>
-            <p> Natural Language Toolkit, or NLTK, is a Python library configured to analyze natural speech data. NLTK offers a wide range of features that can easily process any body of text, such as part-of-speech tagging, tokenization, and semantic reasoning. 
-                One of NLTK's most popular features is its sentiment analysis tool, VADER. VADER, also known as <b>Valence Aware Dictionary for sEntiment Reasoning</b>, uses its sentiment lexicon and a blend of grammatical rules and syntactical conventions.</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NLTK Sentiment Analysis Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #333;
+        }
 
-            <h2>How does VADER work?</h2>
-            <h3>Sentiment Lexicon</h3>
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            background-color: #495057;
+            padding: 10px 40px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 5px 0;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px 40px;
+        }
+
+        h2, h3 {
+            color: #007bff;
+        }
+
+        pre {
+            background-color: #e9ecef;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        blockquote {
+            background-color: #f1f3f5;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        figure {
+            text-align: center;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NLTK Sentiment Analysis Tutorial</h1>
+        <p>Learn how to use VADER for analyzing political speech sentiment with Python.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <h2>Sections</h2>
+            <li><a href="#step0">Step 0: Installing and Importing Modules</a></li>
+            <li><a href="#step1">Step 1: Loading in and Cleaning Up Your CSV</a></li>
+            <li><a href="#step2">Step 2: Create a Speaker Dictionary</a></li>
+            <li><a href="#step3">Step 3: Tokenizing and Lemmatizing</a></li>
+            <li><a href="#step4">Step 4: Analyzing Your Data</a></li>
+            <li><a href="#step5">Step 5: Results</a></li>
+        </ul>
+    </nav>
+        <main>
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p> Natural Language Toolkit, or NLTK, is a Python library configured to analyze natural speech data. NLTK offers a wide range of features that can easily process any body of text, such as part-of-speech tagging, tokenization, and semantic reasoning. 
+                One of NLTK's most popular features is its sentiment analysis tool, VADER. VADER, also known as <b>Valence Aware Dictionary for sEntiment Reasoning</b>, uses its sentiment lexicon and a blend of grammatical rules and syntactical conventions.</p>
+                <h3>How does VADER work?</h3>
+                <b>Sentiment Lexicon</b>b
                 <p>A sentiment lexicon is a dictionary that maps words, phrases, and symbols and matches those to a specific emotional valence. VADER's literature further explains this process:</p>
                 <blockquote> "We  begin  by  constructing  a  list  inspired  by  examiningexisting well-established  sentiment  word-banks  (LIWC, ANEW, and  GI).  To  this,  we  next  incorporate  numerous lexical  features  common  to  sentiment  expression  
                     in  microblogs, including a full list of Western-style  emoticons (for example, “:-)” denotes a “smiley face” and generally indicates  positive  sentiment),  sentiment-related  acronyms and  initialisms (e.g.,  LOL  and  WTF  are  both  
@@ -23,22 +127,7 @@
                 <figure>
                     <img src="https://github.com/kathleenalvescosta/presidential-candidate-sentiment-analsysis/blob/main/method.png?raw=true" alt= "VADER Method Diagram">
                 </figure>
-        <nav>
-            <ul>
-                <h2>Sections</h2>
-                <li><a href="#step0">Step 0: Installing and Importing Modules</a></li>
-                <li><a href="#step1">Step 1: Loading in and Cleaning Up Your CSV</a></li>
-                <li><a href="#step2">Step 2: Create a Speaker Dictionary</a></li>
-                <li><a href="#step3">Step 3: Tokenizing and Lemmatizing</a></li>
-                <li><a href="#step4">Step 4: Analyzing Your Data</a></li>
-                <li><a href="#step5">Step 5: Results</a></li>
-            </ul>
-        </nav>
-
-        </header>
-
-        
-        <main>
+            </section>
             <section id="step0">
                 <h2>Step 0: Installing and Importing Modules</h2>
                 <p>For step zero, you will need to start by installing and importing the necessary modules. For this particular analysis, you will need to download the following modules onto your terminal.</p>
