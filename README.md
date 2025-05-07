@@ -1,1 +1,3 @@
 This is a sentiment analysis tutorial using NLTK's sentiment analysis module. The dataset that will be used here is from several 2020 Democratic debates (source :https://github.com/favstats/demdebates2020/tree/master). 
+
+Access the web tutorial here: **https://kathleenalvescosta.github.io/presidential-candidate-sentiment-analsysis/**
