@@ -1,7 +1,7 @@
 # NLTK SENTIMENT ANALYSIS TUTORIAL
 ## Using 2020 Democratic Debate Data
-### Kathleen Costa
-### LING 539 Spring 2025
+Kathleen Costa
+LING 539 Spring 2025
 
 ## Overview
 This tutorial aims to demonstrate a simple way to use NLTK's VADER tool to detect sentiment in text. This tutorial uses pandas, regex, NLTK, and string to compile a sentiment analysis list for each candidate mentioned in the dataset. Tutees will also learn to clean up data to be processed through the analyzer.
